@@ -23,7 +23,7 @@ RUN /rocker_scripts/install_python.sh
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     openssh-server
-    
+
 # setup git credentials
 ARG GIT_USER_NAME
 ARG GIT_USER_EMAIL
@@ -75,8 +75,6 @@ RUN install2.r --error --skipinstalled --ncpus -1 \
     datapasta \
     # quick serialization
     qs \
-    # plot preview server 
-    httpgd \
     # for word reports
     officer \
     # logging
