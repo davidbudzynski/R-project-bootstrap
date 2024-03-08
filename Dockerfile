@@ -24,8 +24,11 @@ RUN echo 'options(renv.config.cache.symlinks = FALSE)' >> /root/.Rprofile
 # install R packages 
 RUN install2.r --error --skipinstalled --ncpus -1 \
     data.table \
+    # ML
     mlr3 \
     tidymodels \
+    # NLP
+    quanteda \
     renv \
     psych \
     stringi \
@@ -33,6 +36,29 @@ RUN install2.r --error --skipinstalled --ncpus -1 \
     openxlsx \
     rio \
     fs \
+    janitor \
+    languageserver \
+    styler \
+    gt \
+    flextable \
+    Rcpp \
+    # web
+    XML \
+    jsonlite \
+    httr \
+    curl \
+    # dates and time helper
+    anytime \
+    # copy data from clipboard
+    datapasta \
+    # quick serialization
+    qs \
+    # plot preview server 
+    httpgd \
+    # for word reports
+    officer \
+    # logging
+    logger \
     && rm -rf /tmp/downloaded_packages \
     && rm -rf /var/lib/apt/lists/*
 # update data.table to the dev version
