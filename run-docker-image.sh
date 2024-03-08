@@ -15,7 +15,8 @@
 #   directory on the host to "/home/rstudio/" in the container.
 # - The "--workdir /home/rstudio/" flag sets the working directory inside the
 #   container to "/home/rstudio/".
-# - The "proj-setup" argument specifies the name of the Docker image to run.
+# - The last argument specifies the name of the Docker image to run.
+
 
 docker run --rm \
     --interactive \
@@ -24,4 +25,4 @@ docker run --rm \
     --publish 127.0.0.1:8787:8787 \
     --volume $(pwd):/home/rstudio/ \
     --workdir /home/rstudio/ \
-    proj-setup
+    r-project-bootstrap:latest
