@@ -1,5 +1,24 @@
 FROM rocker/r-ver:4.3.3
 
+# setup git credentials
+ARG GIT_USER_NAME
+ARG GIT_USER_EMAIL
+
+RUN git config --global user.name "${GIT_USER_NAME}"
+RUN git config --global user.email "${GIT_USER_EMAIL}"
+
+# copy ssh keys so it is possible to clone private repositories and commit
+# changes from within the container
+
+ARG SSH_PRIVATE_KEY
+
+RUN mkdir -p /root/.ssh && \
+    chmod 0700 /root/.ssh && \
+    echo "$SSH_PRIVATE_KEY" > /root/.ssh/id_rsa && \
+    chmod 0600 /root/.ssh/id_rsa && \
+    touch /root/.ssh/known_hosts && \
+    ssh-keyscan github.com >> /root/.ssh/known_hosts
+
 LABEL org.opencontainers.image.licenses="GPL-2.0-or-later" \
       org.opencontainers.image.source="https://github.com/rocker-org/rocker-versioned2" \
       org.opencontainers.image.vendor="Rocker Project" \
