@@ -24,26 +24,6 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     openssh-server
 
-# setup git credentials
-ARG GIT_USER_NAME
-ARG GIT_USER_EMAIL
-
-#FIXME: this is not working
-RUN git config --global user.name "${GIT_USER_NAME}"
-RUN git config --global user.email "${GIT_USER_EMAIL}"
-
-# copy ssh keys so it is possible to clone private repositories and commit
-# changes from within the container
-
-ARG SSH_PRIVATE_KEY
-
-RUN mkdir -p /root/.ssh && \
-    chmod 0700 /root/.ssh && \
-    echo "$SSH_PRIVATE_KEY" > /root/.ssh/id_rsa && \
-    chmod 0600 /root/.ssh/id_rsa && \
-    touch /root/.ssh/known_hosts && \
-    ssh-keyscan github.com >> /root/.ssh/known_hosts
-
 # install R packages 
 RUN install2.r --error --skipinstalled --ncpus -1 \
     data.table \
