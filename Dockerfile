@@ -5,24 +5,20 @@ LABEL org.opencontainers.image.licenses="GPL-2.0-or-later" \
       org.opencontainers.image.vendor="Rocker Project" \
       org.opencontainers.image.authors="Carl Boettiger <cboettig@ropensci.org>"
 
-ENV S6_VERSION=v2.1.0.2
-ENV RSTUDIO_VERSION=2023.12.0+369
-ENV DEFAULT_USER=rstudio
 ENV PANDOC_VERSION=default
-ENV QUARTO_VERSION=1.4.550
+# specify which vesrion of quarto to install (default is the latest)
+ENV QUARTO_VERSION=default
 
-RUN /rocker_scripts/install_rstudio.sh
 RUN /rocker_scripts/install_pandoc.sh
 RUN /rocker_scripts/install_quarto.sh
 RUN /rocker_scripts/setup_R.sh \
-    https://packagemanager.posit.co/cran/__linux__/jammy/2024-03-01
+    # note the date at the end of the link here. This is the date of the P3M
+    # snapshot and it will install packages in a state from that date.
+    https://packagemanager.posit.co/cran/__linux__/jammy/2024-03-13
 RUN /rocker_scripts/install_texlive.sh
 RUN /rocker_scripts/install_tidyverse.sh
 RUN /rocker_scripts/install_python.sh
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-    openssh-server
 
 # install R packages 
 RUN install2.r --error --skipinstalled --ncpus -1 \
@@ -32,7 +28,7 @@ RUN install2.r --error --skipinstalled --ncpus -1 \
     tidymodels \
     # NLP
     quanteda \
-    renv \
+    # renv \
     psych \
     stringi \
     skimr \
@@ -53,7 +49,7 @@ RUN install2.r --error --skipinstalled --ncpus -1 \
     # dates and time helper
     anytime \
     # copy data from clipboard
-    datapasta \
+    # datapasta \
     # quick serialization
     qs \
     # for word reports
@@ -66,7 +62,3 @@ RUN install2.r --error --skipinstalled --ncpus -1 \
 RUN R -e "data.table::update_dev_pkg()"
 # install all packages used by rio for I/O
 RUN R -e "rio::install_formats()"
-
-EXPOSE 8787
-
-CMD ["/init"]
