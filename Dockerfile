@@ -65,3 +65,7 @@ RUN install2.r --error --skipinstalled --ncpus -1 \
 RUN R -e "data.table::update_dev_pkg()"
 # install all packages used by rio for I/O
 RUN R -e "rio::install_formats()"
+
+# Once you have scripts to run, they can be added to the image and run during
+# the image build process (as opposed to image rung time).
+# RUN Rscript file.R
