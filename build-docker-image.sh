@@ -1,9 +1,8 @@
 #!/bin/bash
-
 # Author: David Budzynski
 
 # Get the name of the current folder
-current_folder=$(basename "$(pwd)") 
+current_folder=$(basename "$(pwd)")
 
 # Convert current_folder to lowercase if it contains uppercase characters
 if [[ "$current_folder" =~ [A-Z] ]]; then
