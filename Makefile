@@ -29,4 +29,15 @@ docker-run: # run docker image
 		--tty \
 		--volume $(CURRENT_DIR):/home/$(CURRENT_DIR_BASENAME)/ \
 		--workdir /home/$(CURRENT_DIR_BASENAME)/ \
-		$(DOCKER_IMAGE_NAME):$(DOCKER_RELEASE_TAG) \
+		$(DOCKER_IMAGE_NAME):$(DOCKER_RELEASE_TAG)
+
+docker-save-image:
+	docker save \$(DOCKER_IMAGE_NAME):$(DOCKER_RELEASE_TAG) \
+		| zstd -19 -T0 > $(DOCKER_IMAGE_NAME)-$(DOCKER_RELEASE_TAG).tar.zst
+
+# load the image from the compressed archive. This is useful for sharing the
+# built image but probably not likely that you will need to do this. more info
+# at:
+# https://raps-with-r.dev/repro_cont.html?q=docker%20sav#sharing-a-compressed-archive-of-your-image
+docker-load-image:
+	zstd -d -c $(DOCKER_IMAGE_NAME)-$(DOCKER_RELEASE_TAG).tar.zst | docker load
