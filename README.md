@@ -24,3 +24,7 @@ Inspired by [cookiecutter data science repo](https://github.com/drivendata/cooki
 ├── rstudio-project-file.Rproj <- RStudio project file
 └── src                        <- Source code for use in this project.
 ```
+
+## Usage
+
+1. Initialize the project by running `make init`
