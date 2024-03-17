@@ -8,7 +8,6 @@ DOCKER_IMAGE_NAME := $(shell echo $(CURRENT_DIR_BASENAME) | tr '[:upper:]' '[:lo
 .PHONY: clean docker-build docker-run docker-save-image docker-load-image init
 
 clean: # remove all files in output directory
-
 	rm -rf output/plots/*
 	touch output/plots/.gitkeep
 	rm -rf output/reports/*
@@ -45,5 +44,16 @@ docker-load-image:
 init: # initialize the project
 	mv rstudio_project_template.Rproj $(CURRENT_DIR_BASENAME).Rproj
 
-# TODO: add a target to run code formatting and linting
-# TODO: add a target to run the main analysis
+lint: # run linting and code formatting
+	@echo "Running linting and code formatting"
+	# Rscript -e "styler::style_dir(style = tidyverse_style, indent_by = 4)"
+	# Rscript -e "lintr::lint_dir()"
+
+analysis: # run the main analysis
+	@echo "Running the main analysis"
+	# run the main analysis by executing all R scripts in the src directory in
+	# the correct order using Rscript like so:
+	# Rscript -e "source('src/analysis.R')"
+
+all: lint analysis # run all targets
+
