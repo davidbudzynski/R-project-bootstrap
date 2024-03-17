@@ -42,7 +42,7 @@ docker-load-image:
 	zstd -d -c $(DOCKER_IMAGE_NAME)-$(DOCKER_RELEASE_TAG).tar.zst | docker load
 
 init: # initialize the project
-	mv rstudio_project_template.Rproj $(CURRENT_DIR_BASENAME).Rproj
+	mv rstudio-project-file.Rproj $(CURRENT_DIR_BASENAME).Rproj
 
 lint: # run linting and code formatting
 	@echo "Running linting and code formatting"
