@@ -27,4 +27,9 @@ Inspired by [cookiecutter data science repo](https://github.com/drivendata/cooki
 
 ## Usage
 
-1. Initialize the project by running `make init`
+ To initialize the project, simply run `make init`
+
+<!-- 
+TODO: add info about creating targets like running the analysis, cleaning etc. and how
+to build docker image, update the values in the docker image etc.
+ -->
