@@ -90,3 +90,10 @@ make docker-run
 Docker is a very powerful tool, and it is a complex topic. To learn more about
 it, specifically about using docker with R, you can read [Building reproducible
 analytical pipelines with R](https://raps-with-r.dev/).
+
+## Project specific information
+
+This is the place where you can add any information that is specific to your
+project. For example, you can add information about the data, the analysis, or
+any other information that is relevant to the project that will help other
+developers understand it better.
