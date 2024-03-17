@@ -15,13 +15,13 @@ RUN /rocker_scripts/install_quarto.sh
 RUN /rocker_scripts/setup_R.sh \
     # note the date at the end of the link here. This is the date of the P3M
     # snapshot and it will install packages in a state from that date.
-    https://packagemanager.posit.co/cran/__linux__/jammy/2024-03-01
+    https://packagemanager.posit.co/cran/__linux__/jammy/2024-03-15
 RUN /rocker_scripts/install_texlive.sh
 RUN /rocker_scripts/install_tidyverse.sh
 RUN /rocker_scripts/install_python.sh
 
 
-# install R packages 
+# install R packages
 RUN install2.r --error --skipinstalled --ncpus -1 \
     data.table \
     # ML
@@ -39,6 +39,7 @@ RUN install2.r --error --skipinstalled --ncpus -1 \
     janitor \
     languageserver \
     styler \
+    lintr \
     gt \
     flextable \
     Rcpp \
@@ -63,7 +64,7 @@ RUN install2.r --error --skipinstalled --ncpus -1 \
 # update data.table to the dev version to use the latest features. NOTE that
 #this will pull any changes from the data.table repo, so it isn't recommended if
 # you want to maintein a stable environment and keep reproducibility
-RUN R -e "data.table::update_dev_pkg()"
+# RUN R -e "data.table::update_dev_pkg()"
 # install all packages used by rio for I/O
 RUN R -e "rio::install_formats()"
 
