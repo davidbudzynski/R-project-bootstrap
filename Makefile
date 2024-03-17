@@ -5,7 +5,7 @@ DOCKER_RELEASE_TAG := latest# assume latest tag is the default
 # lowercase
 DOCKER_IMAGE_NAME := $(shell echo $(CURRENT_DIR_BASENAME) | tr '[:upper:]' '[:lower:]')
 
-.PHONY: clean docker-build docker-run docker-save-image docker-load-image
+.PHONY: clean docker-build docker-run docker-save-image docker-load-image init
 
 clean: # remove all files in output directory
 
@@ -41,3 +41,6 @@ docker-save-image:
 # https://raps-with-r.dev/repro_cont.html?q=docker%20sav#sharing-a-compressed-archive-of-your-image
 docker-load-image:
 	zstd -d -c $(DOCKER_IMAGE_NAME)-$(DOCKER_RELEASE_TAG).tar.zst | docker load
+
+init: # initialize the project
+	mv rstudio_project_template.Rproj $(CURRENT_DIR_BASENAME).Rproj
