@@ -1,3 +1,4 @@
+# license: GPL-2.0-or-later
 FROM rocker/r-ver:4.3.3
 
 LABEL org.opencontainers.image.licenses="GPL-2.0-or-later" \
