@@ -56,4 +56,3 @@ analysis: # run the main analysis
 	# Rscript -e "source('src/analysis.R')"
 
 all: lint analysis # run all targets
-
