@@ -44,3 +44,6 @@ docker-load-image:
 
 init: # initialize the project
 	mv rstudio_project_template.Rproj $(CURRENT_DIR_BASENAME).Rproj
+
+# TODO: add a target to run code formatting and linting
+# TODO: add a target to run the main analysis
