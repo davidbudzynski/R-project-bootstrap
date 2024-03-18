@@ -28,7 +28,7 @@ repo](https://github.com/drivendata/cookiecutter-data-science)
 
 ## Usage
 
-### initializing the project
+### Initializing the project
 
 To initialize the project, simply run `make init`. This will rename the
 `rstudio-project-file.Rproj` to the name of the directory you are currently in.
