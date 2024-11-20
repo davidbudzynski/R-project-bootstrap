@@ -1,5 +1,5 @@
 # license: GPL-2.0-or-later
-FROM rocker/r-ver:4.3.3
+FROM rocker/r-ver:4.4.2
 
 LABEL org.opencontainers.image.licenses="GPL-2.0-or-later" \
       org.opencontainers.image.source="https://github.com/rocker-org/rocker-versioned2" \
@@ -15,7 +15,7 @@ RUN /rocker_scripts/install_quarto.sh
 RUN /rocker_scripts/setup_R.sh \
     # note the date at the end of the link here. This is the date of the P3M
     # snapshot and it will install packages in a state from that date.
-    https://packagemanager.posit.co/cran/__linux__/jammy/2024-03-15
+    https://packagemanager.posit.co/cran/__linux__/jammy/2024-11-20
 RUN /rocker_scripts/install_texlive.sh
 RUN /rocker_scripts/install_tidyverse.sh
 RUN /rocker_scripts/install_python.sh
