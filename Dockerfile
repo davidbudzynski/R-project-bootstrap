@@ -79,9 +79,13 @@ RUN install2.r --error --skipinstalled --ncpus -1 \
 RUN R -e "rio::install_formats()"
 
 # install air, the modern R formatter (a Rust binary, not an R package). The
-# installer adds air to the shell profile PATH, which non-interactive Docker
-# steps do not source, so symlink the binary into /usr/local/bin if needed.
-RUN curl -LsSf https://github.com/posit-dev/air/releases/latest/download/air-installer.sh | sh \
+# base image ships no curl CLI, so install it first. The installer adds air to
+# the shell profile PATH, which non-interactive Docker steps do not source, so
+# symlink the binary into /usr/local/bin if needed.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && curl -LsSf https://github.com/posit-dev/air/releases/latest/download/air-installer.sh | sh \
     && if ! command -v air >/dev/null 2>&1; then \
          find "${HOME}" -type f -name air -exec ln -sf {} /usr/local/bin/air \; ; \
        fi \
