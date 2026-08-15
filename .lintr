@@ -1,0 +1,6 @@
+linters: linters_with_defaults(
+    # match the air formatter's 4-space indent from air.toml
+    indentation_linter = indentation_linter(indent = 4L),
+    # data.table's non-standard evaluation is reported as false positives
+    object_usage_linter = NULL
+  )

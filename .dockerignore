@@ -1,0 +1,13 @@
+# Git history and repo metadata
+.git
+.gitignore
+README.md
+LICENSE
+
+# Container image archives
+*.tar.zst
+
+# Source data and generated outputs are mounted at runtime, not baked in
+data/
+output/
+references/
