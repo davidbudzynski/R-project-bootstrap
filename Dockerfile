@@ -2,9 +2,9 @@
 FROM rocker/r-ver:4.6.1
 
 LABEL org.opencontainers.image.licenses="GPL-2.0-or-later" \
-      org.opencontainers.image.source="https://github.com/rocker-org/rocker-versioned2" \
-      org.opencontainers.image.vendor="Rocker Project" \
-      org.opencontainers.image.authors="Carl Boettiger <cboettig@ropensci.org>"
+      org.opencontainers.image.source="https://github.com/davidbudzynski/R-project-bootstrap" \
+      org.opencontainers.image.vendor="David Budzyński" \
+      org.opencontainers.image.authors="David Budzyński <56514985+davidbudzynski@users.noreply.github.com>"
 
 ENV PANDOC_VERSION=default
 # specify which vesrion of quarto to install (default is the latest)
