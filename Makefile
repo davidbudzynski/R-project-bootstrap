@@ -44,15 +44,23 @@ docker-load-image:
 init: # initialize the project
 	mv rstudio-project-file.Rproj $(CURRENT_DIR_BASENAME).Rproj
 
-lint: # run linting and code formatting
+lint: # verify formatting and run linting
 	@echo "Running linting and code formatting"
-	# Rscript -e "styler::style_dir(style = tidyverse_style, indent_by = 4)"
-	# Rscript -e "lintr::lint_dir()"
+	air format . --check
+	Rscript -e "lintr::lint_dir()"
+
+format: # format R code with air
+	@echo "Formatting R code with air"
+	air format .
+
+test: # run the test suite
+	@echo "Running tests"
+	Rscript -e "testthat::test_dir('tests/testthat')"
 
 analysis: # run the main analysis
 	@echo "Running the main analysis"
 	# run the main analysis by executing all R scripts in the src directory in
 	# the correct order using Rscript like so:
-	# Rscript -e "source('src/analysis.R')"
+	Rscript src/analysis.R
 
-all: lint analysis # run all targets
+all: lint test analysis # run all targets
