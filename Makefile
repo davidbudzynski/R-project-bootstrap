@@ -4,6 +4,10 @@ DOCKER_RELEASE_TAG := latest# assume latest tag is the default
 # the image name should be lowercase, so convert the current directory name to
 # lowercase
 DOCKER_IMAGE_NAME := $(shell echo $(CURRENT_DIR_BASENAME) | tr '[:upper:]' '[:lower:]')
+# container engine to use. podman is a drop-in, daemonless alternative to
+# docker with a compatible CLI. override on the command line with:
+# make CONTAINER_TOOL=podman docker-build
+CONTAINER_TOOL ?= docker
 
 .PHONY: clean docker-build docker-run docker-save-image docker-load-image init lint format analysis test all
 
@@ -16,14 +20,14 @@ clean: # remove all files in output directory
 	touch output/data/.gitkeep
 	rm -rf $(DOCKER_IMAGE_NAME)-$(DOCKER_RELEASE_TAG).tar.zst
 
-docker-build: # build docker image
-	docker build \
+docker-build: # build container image
+	$(CONTAINER_TOOL) build \
 		--tag $(DOCKER_IMAGE_NAME):$(DOCKER_RELEASE_TAG) \
 		--file Dockerfile \
 		.
 
-docker-run: # run docker image
-	docker run --rm \
+docker-run: # run container image
+	$(CONTAINER_TOOL) run --rm \
 		--interactive \
 		--tty \
 		--volume $(CURRENT_DIR):/home/$(CURRENT_DIR_BASENAME)/ \
@@ -31,7 +35,7 @@ docker-run: # run docker image
 		$(DOCKER_IMAGE_NAME):$(DOCKER_RELEASE_TAG)
 
 docker-save-image:
-	docker save $(DOCKER_IMAGE_NAME):$(DOCKER_RELEASE_TAG) \
+	$(CONTAINER_TOOL) save $(DOCKER_IMAGE_NAME):$(DOCKER_RELEASE_TAG) \
 		| zstd -19 -T0 > $(DOCKER_IMAGE_NAME)-$(DOCKER_RELEASE_TAG).tar.zst
 
 # load the image from the compressed archive. This is useful for sharing the
@@ -39,7 +43,7 @@ docker-save-image:
 # at:
 # https://raps-with-r.dev/repro_cont.html?q=docker%20sav#sharing-a-compressed-archive-of-your-image
 docker-load-image:
-	zstd -d -c $(DOCKER_IMAGE_NAME)-$(DOCKER_RELEASE_TAG).tar.zst | docker load
+	zstd -d -c $(DOCKER_IMAGE_NAME)-$(DOCKER_RELEASE_TAG).tar.zst | $(CONTAINER_TOOL) load
 
 init: # initialize the project
 	mv rstudio-project-file.Rproj $(CURRENT_DIR_BASENAME).Rproj
