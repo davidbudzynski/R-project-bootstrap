@@ -78,6 +78,15 @@ RUN install2.r --error --skipinstalled --ncpus -1 \
 # install all packages used by rio for I/O
 RUN R -e "rio::install_formats()"
 
+# install air, the modern R formatter (a Rust binary, not an R package). The
+# installer adds air to the shell profile PATH, which non-interactive Docker
+# steps do not source, so symlink the binary into /usr/local/bin if needed.
+RUN curl -LsSf https://github.com/posit-dev/air/releases/latest/download/air-installer.sh | sh \
+    && if ! command -v air >/dev/null 2>&1; then \
+         find "${HOME}" -type f -name air -exec ln -sf {} /usr/local/bin/air \; ; \
+       fi \
+    && air --version
+
 # Once you have scripts to run, they can be added to the image and run during
 # the image build process (as opposed to image rung time).
 # RUN Rscript file.R
