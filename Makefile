@@ -5,7 +5,7 @@ DOCKER_RELEASE_TAG := latest# assume latest tag is the default
 # lowercase
 DOCKER_IMAGE_NAME := $(shell echo $(CURRENT_DIR_BASENAME) | tr '[:upper:]' '[:lower:]')
 
-.PHONY: clean docker-build docker-run docker-save-image docker-load-image init
+.PHONY: clean docker-build docker-run docker-save-image docker-load-image init lint format analysis test all
 
 clean: # remove all files in output directory
 	rm -rf output/plots/*
