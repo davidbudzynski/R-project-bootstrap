@@ -18,7 +18,7 @@ repo](https://github.com/drivendata/cookiecutter-data-science)
 │  └── raw                     <- The original, immutable data dump.
 ├── Dockerfile                 <- Dockerfile for building the docker image
 ├── LICENSE                    <- License for this project
-├── Makefile                   <- Makefile with commands like `make data` or `make train
+├── Makefile                   <- Makefile with commands like `make data` or `make train`
 ├── output
 │  ├── data                    <- Processed data
 │  ├── plots                   <- Generated graphics and figures to be used in reporting
