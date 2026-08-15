@@ -59,7 +59,7 @@ RUN install2.r --error --skipinstalled --ncpus -1 \
     # copy data from clipboard
     # datapasta \
     # quick serialization
-    qs \
+    qs2 \
     # for word reports
     officer \
     # logging
