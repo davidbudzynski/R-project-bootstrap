@@ -69,7 +69,7 @@ Most likely the most common targets you will use are:
 5. clean
 6. all (lint, test and analysis)
 
-Additionally, the Makefile contain docker-specific targets, that will allow to
+Additionally, the Makefile contain container-specific targets, that will allow to
 build image and run the analysis in the container.
 
 ### Formatting and linting with air
