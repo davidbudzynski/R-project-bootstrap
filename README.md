@@ -16,7 +16,7 @@ repo](https://github.com/drivendata/cookiecutter-data-science)
 ├── air.toml                   <- Configuration for the air formatter
 ├── data
 │  └── raw                     <- The original, immutable data dump.
-├── Dockerfile                 <- Dockerfile for building the docker image
+├── Dockerfile                   <- Dockerfile for building the container image (docker/podman)
 ├── LICENSE                    <- License for this project
 ├── Makefile                   <- Makefile with commands like `make data` or `make train`
 ├── output
@@ -88,21 +88,32 @@ installed.
 The `air.toml` file pins the formatter settings (80 columns, 4-space indent, LF
 line endings) so behaviour is identical across editors and CI.
 
-### Docker
+### Docker and Podman
 
-The project contains a `Dockerfile` that will allow you to build a docker image.
-This image uses the Rocker project as base image, and installs all the necessary
-packages and dependencies. You need to pay attention to the `Dockerfile` as it
-contains important information about the image, like the R version, and the
-packages that are installed. Make sure to update the `Dockerfile` with the
-correct information. For example, if you want to use a different version of R,
-you can change that, as well as the packages that are installed. In order to
-make sure your entire project is reproducible, you need to add run the analysis
-as part of the docker image build process. This can be done by adding the
-`analysis` target to the `Dockerfile`.
+The project contains a `Dockerfile` that will allow you to build a container
+image. This image uses the Rocker project as base image, and installs all the
+necessary packages and dependencies. You need to pay attention to the
+`Dockerfile` as it contains important information about the image, like the R
+version, and the packages that are installed. Make sure to update the
+`Dockerfile` with the correct information. For example, if you want to use a
+different version of R, you can change that, as well as the packages that are
+installed. In order to make sure your entire project is reproducible, you need
+to add run the analysis as part of the container image build process. This can
+be done by adding the `analysis` target to the `Dockerfile`.
 
 ```Dockerfile
 RUN make analysis
+```
+
+The image can be built and run with either [Docker](https://www.docker.com/) or
+[Podman](https://podman.io/). Podman is a daemonless, rootless alternative to
+Docker with a compatible CLI and a more permissive (Apache-2.0) license. The
+Makefile targets default to `docker`; to use Podman instead, override the
+`CONTAINER_TOOL` variable:
+
+```bash
+make CONTAINER_TOOL=podman docker-build
+make CONTAINER_TOOL=podman docker-run
 ```
 
 Once you have built the image, you can run the analysis in the container. This
@@ -114,9 +125,10 @@ container. To run the image, you can use the following command:
 make docker-run
 ```
 
-Docker is a very powerful tool, and it is a complex topic. To learn more about
-it, specifically about using docker with R, you can read [Building reproducible
-analytical pipelines with R](https://raps-with-r.dev/).
+Docker and Podman are very powerful tools, and they are a complex topic. To
+learn more about them, specifically about using containerization with R, you
+can read [Building reproducible analytical pipelines with
+R](https://raps-with-r.dev/).
 
 ### Reproducibility with P3M date snapshots
 
