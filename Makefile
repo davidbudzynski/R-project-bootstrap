@@ -1,6 +1,7 @@
 CURRENT_DIR := $(shell pwd)
 CURRENT_DIR_BASENAME := $(shell basename $(CURRENT_DIR))
-DOCKER_RELEASE_TAG := latest# assume latest tag is the default
+# assume latest tag is the default
+DOCKER_RELEASE_TAG := latest
 # the image name should be lowercase, so convert the current directory name to
 # lowercase
 DOCKER_IMAGE_NAME := $(shell echo $(CURRENT_DIR_BASENAME) | tr '[:upper:]' '[:lower:]')
