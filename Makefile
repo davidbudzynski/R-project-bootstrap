@@ -31,7 +31,7 @@ docker-run: # run docker image
 		$(DOCKER_IMAGE_NAME):$(DOCKER_RELEASE_TAG)
 
 docker-save-image:
-	docker save \$(DOCKER_IMAGE_NAME):$(DOCKER_RELEASE_TAG) \
+	docker save $(DOCKER_IMAGE_NAME):$(DOCKER_RELEASE_TAG) \
 		| zstd -19 -T0 > $(DOCKER_IMAGE_NAME)-$(DOCKER_RELEASE_TAG).tar.zst
 
 # load the image from the compressed archive. This is useful for sharing the
