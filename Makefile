@@ -45,8 +45,13 @@ docker-save-image:
 docker-load-image:
 	zstd -d -c $(DOCKER_IMAGE_NAME)-$(DOCKER_RELEASE_TAG).tar.zst | $(CONTAINER_TOOL) load
 
-init: # initialize the project
-	mv rstudio-project-file.Rproj $(CURRENT_DIR_BASENAME).Rproj
+init: # initialize the project (idempotent; safe to re-run)
+	@if [ ! -f rstudio-project-file.Rproj ]; then \
+		echo "Project already initialized"; \
+	else \
+		mv rstudio-project-file.Rproj $(CURRENT_DIR_BASENAME).Rproj; \
+		echo "Initialized $(CURRENT_DIR_BASENAME).Rproj"; \
+	fi
 
 lint: # verify formatting and run linting
 	@echo "Running linting and code formatting"
