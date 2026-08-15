@@ -30,13 +30,17 @@ RUN install2.r --error --skipinstalled --ncpus -1 \
     tidymodels \
     # NLP
     quanteda \
+    # renv is intentionally not used: package versions are already pinned by
+    # the P3M date snapshot above, and the entire environment is the image.
     # renv \
     psych \
     stringi \
     skimr \
     openxlsx \
+    openxlsx2 \
     rio \
     fs \
+    here \
     janitor \
     languageserver \
     styler \
@@ -46,8 +50,9 @@ RUN install2.r --error --skipinstalled --ncpus -1 \
     Rcpp \
     # web
     XML \
+    xml2 \
     jsonlite \
-    httr \
+    httr2 \
     curl \
     # dates and time helper
     anytime \
@@ -59,6 +64,10 @@ RUN install2.r --error --skipinstalled --ncpus -1 \
     officer \
     # logging
     logger \
+    # development tooling
+    testthat \
+    withr \
+    devtools \
     # cleanup downloaded packages
     && rm -rf /tmp/downloaded_packages \
     && rm -rf /var/lib/apt/lists/*
