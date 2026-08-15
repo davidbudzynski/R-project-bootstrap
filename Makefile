@@ -1,6 +1,7 @@
 CURRENT_DIR := $(shell pwd)
 CURRENT_DIR_BASENAME := $(shell basename $(CURRENT_DIR))
-DOCKER_RELEASE_TAG := latest# assume latest tag is the default
+# assume latest tag is the default
+DOCKER_RELEASE_TAG := latest
 # the image name should be lowercase, so convert the current directory name to
 # lowercase
 DOCKER_IMAGE_NAME := $(shell echo $(CURRENT_DIR_BASENAME) | tr '[:upper:]' '[:lower:]')
@@ -45,8 +46,13 @@ docker-save-image:
 docker-load-image:
 	zstd -d -c $(DOCKER_IMAGE_NAME)-$(DOCKER_RELEASE_TAG).tar.zst | $(CONTAINER_TOOL) load
 
-init: # initialize the project
-	mv rstudio-project-file.Rproj $(CURRENT_DIR_BASENAME).Rproj
+init: # initialize the project (idempotent; safe to re-run)
+	@if [ ! -f rstudio-project-file.Rproj ]; then \
+		echo "Project already initialized"; \
+	else \
+		mv rstudio-project-file.Rproj $(CURRENT_DIR_BASENAME).Rproj; \
+		echo "Initialized $(CURRENT_DIR_BASENAME).Rproj"; \
+	fi
 
 lint: # verify formatting and run linting
 	@echo "Running linting and code formatting"
